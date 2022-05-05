@@ -11,7 +11,6 @@
         <!-- root url should match the main app with the feature name appened to the end. -->
         <Package>com.infinitespacestudios.monogameinstalltimegame1.assetsfeature</Package>
         <MonoGamePlatform>Android</MonoGamePlatform>
-        <AssetsDirectory>bin\$(MonoGamePlatform)</AssetsDirectory>
         <AndroidBundleConfigurationFile>..\Game1\bundle.config</AndroidBundleConfigurationFile>
     </PropertyGroup>
 
@@ -38,4 +37,18 @@
     </ItemGroup>
     <!-- Import the Dynamic Feature targets. -->
     <Import Project="..\Targets\DynamicFeature.targets" />
+
+  <Target Name="_CopyPackageAssets" AfterTargets="IncludeContent">
+    <!-- Copy the AndroidAsset Items into a holding directory for packaging.
+      Be sure to use the Link property for the target directory.
+    -->
+    <MakeDir Directories="$(IntermediateOutputPath)assets" />
+    <Copy SourceFiles="%(AndroidAsset.Identity)" DestinationFiles="$(IntermediateOutputPath)\assets\Content\%(AndroidAsset.Link)" />
+  </Target>
+
+  <Target Name="_CalculateAssetsDirectoryName" BeforeTargets="PackageAssets">
+    <PropertyGroup>
+        <AssetsDirectory>$(IntermediateOutputPath)assets\Content</AssetsDirectory>
+    </PropertyGroup>
+  </Target>
 </Project>
