@@ -1,0 +1,74 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+          "label": "build-sample",
+          "type": "shell",
+          "command": "msbuild /restore ${input:project} -t:${input:target} -p:Configuration=${input:configuration} -bl -v:diag",
+          "group": {
+              "kind": "build",
+              "isDefault": true
+          },
+          "problemMatcher": [
+              "$msCompile"
+          ]
+        },
+        {
+          "label": "run-sample",
+          "type": "shell",
+          "command": "msbuild ${input:project} -t:Run -p:Configuration=${input:configuration} -p:AndroidAttachDebugger=${input:attach} -bl -v:diag",
+          "group": {
+              "kind": "build",
+              "isDefault": false
+          },
+          "problemMatcher": [
+              "$msCompile"
+          ]
+        },
+    ],    
+    "inputs": [
+      {
+        "id": "configuration",
+        "type": "pickString",
+        "default": "Debug",
+        "description": "The Build Configuration",
+        "options": [ "Debug", "Release"]
+      },
+      {
+        "id": "attach",
+        "type": "pickString",
+        "default": "Build",
+        "description": "Attach Debugger?",
+        "options": [
+            "true",
+            "false",
+        ]
+      },
+      {
+        // Add additional projects here. They will be available in the drop down
+        // in vscode.
+        "id": "project",
+        "type": "pickString",
+        "default": "Game1/Game1.csproj",
+        "description": "Pick the Project you want to build.",
+        "options": [
+            "Game1/Game1.csproj",
+            "Content/Content.Android.csproj",
+        ]
+      },
+      {
+        "id": "target",
+        "type": "pickString",
+        "default": "Build",
+        "description": "Select MSBuild Target to run.",
+        "options": [
+            "Build",
+            "Install",
+            "SignAndroidPackage",
+            "Clean"
+        ]
+      },
+    ]
+}

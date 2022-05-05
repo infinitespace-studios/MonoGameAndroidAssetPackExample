@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.Build.NoTargets">
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
+        <!--
+            This needs to be changed for EACH Dynamic Asset Feature.
+            The main app defaults to 0x7f , and each feature after that should
+            be lower. So the first feature is 0x7e the next is 0x7d etc etc.
+        -->
+        <PackageId>0x7E</PackageId>
+        <!-- root url should match the main app with the feature name appened to the end. -->
+        <Package>com.infinitespacestudios.monogameinstalltimegame1.assetsfeature</Package>
+        <MonoGamePlatform>Android</MonoGamePlatform>
+        <AssetsDirectory>bin\$(MonoGamePlatform)</AssetsDirectory>
+        <AndroidBundleConfigurationFile>..\Game1\bundle.config</AndroidBundleConfigurationFile>
+    </PropertyGroup>
+
+    <PropertyGroup>
+       <OutputPath Condition="'$(OutputPath)'==''">bin\$(Configuration)</OutputPath>
+    </PropertyGroup>
+    <ItemGroup>
+      <Folder Include="Assets\" />
+    </ItemGroup>
+    <ItemGroup>
+        <!-- This is the main Content.mgcb put ALL content in here -->
+        <MonoGameContentReference Include="Content.mgcb" Visible="false" />
+        <!--
+        These are Content files for platform specific texture compression.
+        ONLY put files in these which can be compressed to the target platform.
+        Some texture compression formats have size and dimension restrictions.
+        -->
+        <MonoGameContentReference Include="Content_etc1.mgcb" Visible="false" />
+        <MonoGameContentReference Include="Content_pvrtc.mgcb" Visible="false" />
+        <MonoGameContentReference Include="Content_s3tc.mgcb" Visible="false" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.0.1641" />
+    </ItemGroup>
+    <!-- Import the Dynamic Feature targets. -->
+    <Import Project="..\Targets\DynamicFeature.targets" />
+</Project>
