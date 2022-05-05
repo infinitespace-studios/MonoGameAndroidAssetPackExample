@@ -31,6 +31,7 @@
         <MonoGameContentReference Include="Content_etc1.mgcb" Visible="false" />
         <MonoGameContentReference Include="Content_pvrtc.mgcb" Visible="false" />
         <MonoGameContentReference Include="Content_s3tc.mgcb" Visible="false" />
+        <MonoGameContentReference Include="Content_atc.mgcb" Visible="false" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.0.1641" />
@@ -48,7 +49,7 @@
 
   <Target Name="_CalculateAssetsDirectoryName" BeforeTargets="PackageAssets">
     <PropertyGroup>
-        <AssetsDirectory>$(IntermediateOutputPath)assets\Content</AssetsDirectory>
+        <AssetsDirectory>$(IntermediateOutputPath)assets</AssetsDirectory>
     </PropertyGroup>
   </Target>
 </Project>

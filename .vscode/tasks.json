@@ -18,11 +18,12 @@
         {
           "label": "run-sample",
           "type": "shell",
-          "command": "msbuild ${input:project} -t:Run -p:Configuration=${input:configuration} -p:AndroidAttachDebugger=${input:attach} -bl -v:diag",
+          "command": "msbuild /restore ${input:project} \"-t:Install;_Run\" -p:Configuration=${input:configuration} -p:AndroidAttachDebugger=${input:attach} -bl -v:diag",
           "group": {
               "kind": "build",
               "isDefault": false
           },
+          "dependsOn": "install",
           "problemMatcher": [
               "$msCompile"
           ]
